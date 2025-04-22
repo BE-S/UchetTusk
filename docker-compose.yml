@@ -1,0 +1,33 @@
+services:
+  belaz:
+    build:
+      dockerfile: ./web.dockerfile
+      context: ./docker
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www
+      - ./apache2/sites-enabled:/etc/apache2/sites-enabled
+    links:
+      - mysql-srv
+
+  mysql-srv:
+    image: mysql:5.6
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 123
+    volumes:
+      - mysql-db:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+volumes:
+  mysql-db:

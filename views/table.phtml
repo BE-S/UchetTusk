@@ -1,0 +1,61 @@
+<?php
+
+$list = (array) ($variables->list ?? []);
+
+?>
+
+<table>
+    <tr>
+        <td>Тема</td>
+        <td>Подтема</td>
+        <td>Содержимое</td>
+    </tr>
+    <?php
+        if (count($list)) {
+            foreach ($list as $topicKey => $topicContent) {
+                $name = (string) ($topicContent["name"] ?? "");
+                $list =  (array) ($topicContent["list"] ?? []);
+
+                foreach
+                (
+                    $list
+                    as
+                    $sibtopicKey =>
+                    [
+                        "subname" => $subname,
+                        "text"    => $text
+                    ]
+                )
+                { ?>
+                    <tr>
+                        <td><?= $name ?? "" ?></td>
+                        <td><a href="/<?= $sibtopicKey ?>"><?= $subname ?></a></td>
+                        <td><?= $text ?></td>
+                    </tr><?php
+                    unset($name);
+                }
+            }
+        }
+    ?>
+</table>
+
+<style>
+
+    table {
+        width: 100%;
+        margin-bottom: 20px;
+        border: 1px solid #dddddd;
+        border-collapse: collapse;
+    }
+    table th {
+        font-weight: bold;
+        padding: 5px;
+        background: #efefef;
+        border: 1px solid #dddddd;
+    }
+    table td {
+        border: 1px solid #dddddd;
+        padding: 5px;
+    }
+
+</style>
